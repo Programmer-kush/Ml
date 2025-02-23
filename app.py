@@ -6,6 +6,14 @@ import time
 # Set page configuration
 st.set_page_config(page_title="NIT Kurukshetra Info App", layout="wide")
 
+hide_github_icon = """
+#GithubIcon {
+  visibility: hidden;
+}
+"""
+st.markdown(hide_github_icon, unsafe_allow_html=True)
+
+
 # Title with animation
 st.title("🏛️ NIT Kurukshetra Information Portal")
 st.markdown("---")
