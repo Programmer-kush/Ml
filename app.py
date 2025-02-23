@@ -43,14 +43,24 @@ if page == "Campus Life":
     st.header("🏕️ Campus Life at NIT Kurukshetra")
     st.write("NIT Kurukshetra offers a vibrant campus life with multiple clubs, fests, and sports facilities.")
     st.image("https://ugcounselor-content.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/04/03203527/NIT-Kurukshetra.jpg", caption="Campus Fest", use_container_width=True)
-    clubs = ["Coding Club", "Robotics Club", "Music and Dance Society", "Sports Club", "Entrepreneurship Cell"]
+    
+    clubs = ["Coding Club", "Robotics Club", "Music and Dance Society", "Sports Club", "Entrepreneurship Cell", "Aeromodelling Club"]
     st.write("### Active Clubs:")
     st.write(", ".join(clubs))
     
     # Poll on favorite club
     club_choice = st.radio("Which club interests you the most?", clubs)
+    
     if st.button("Vote"):
         st.success(f"Thank you for voting for {club_choice}!")
+        
+        # Show plane animation if Aeromodelling Club is chosen
+        if club_choice == "Aeromodelling Club":
+            for i in range(20):
+                plane = "✈️" + " " * i + "🛫"
+                st.write(plane)
+                time.sleep(0.1)
+                st.rerun()  # Refresh the animation
 
 # Admissions Section
 if page == "Admissions":
