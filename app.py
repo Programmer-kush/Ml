@@ -7,7 +7,7 @@ import time
 st.set_page_config(page_title="NIT Kurukshetra Info App", layout="wide")
 
 hide_github_icon = """
-#GithubIcon {
+GithubIcon {
   visibility: hidden;
 }
 """
