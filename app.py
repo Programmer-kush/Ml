@@ -92,7 +92,7 @@ if page == "Feedback":
     if st.button("Submit Feedback"):
         st.success("✅ Thank you for your valuable feedback!")
         time.sleep(1)
-        st.experimental_rerun()
+        st.rerun()
 
 # Footer
 st.markdown("---")
