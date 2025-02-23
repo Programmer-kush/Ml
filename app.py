@@ -6,97 +6,54 @@ import time
 # Set page configuration
 st.set_page_config(page_title="NIT Kurukshetra Info App", layout="wide")
 
+# Custom CSS for snow effect
+snow_css = """
+<style>
+.snowflake {
+  position: fixed;
+  top: 0;
+  color: white;
+  opacity: 0.8;
+  font-size: 10px;
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(100vh); }
+}
+</style>
+<script>
+function createSnowflakes() {
+    for (let i = 0; i < 30; i++) {  // Adjust number of snowflakes
+        let snowflake = document.createElement("div");
+        snowflake.innerHTML = "❄";
+        snowflake.classList.add("snowflake");
+        snowflake.style.left = Math.random() * 100 + "vw";
+        snowflake.style.animationDuration = (Math.random() * 3 + 2) + "s"; 
+        document.body.appendChild(snowflake);
+        setTimeout(() => snowflake.remove(), 5000);
+    }
+}
+</script>
+"""
+
 # Title with animation
 st.title("🏛️ NIT Kurukshetra Information Portal")
 st.markdown("---")
 
 # Sidebar navigation
 st.sidebar.header("Navigation")
-page = st.sidebar.radio("Go to", ["About NIT Kurukshetra", "Departments", "Campus Life", "Admissions", "Contact Info", "Gallery", "Feedback"])
-
-# About Section
-if page == "About NIT Kurukshetra":
-    st.header("🎓 About NIT Kurukshetra")
-    st.write("NIT Kurukshetra is one of the premier engineering institutes in India, known for its excellence in technical education and research.")
-    st.image("https://ugcounselor-content.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/04/03203527/NIT-Kurukshetra.jpg", caption="NIT Kurukshetra Campus", use_container_width=True)
-    st.success("🏆 Ranked among the top NITs in India")
-
-# Departments Section
-departments = {
-    "Computer Science and Engineering": "AI, ML, Cybersecurity, Data Science",
-    "Electronics and Communication Engineering": "VLSI, Signal Processing, IoT",
-    "Mechanical Engineering": "Thermal, Design, Manufacturing",
-    "Civil Engineering": "Structural, Transportation, Environmental",
-    "Electrical Engineering": "Power Systems, Control Systems",
-    "Information Technology": "Software Development, Web Technologies"
-}
-
-if page == "Departments":
-    st.header("🏛️ Departments at NIT Kurukshetra")
-    dept = st.selectbox("Select a Department", list(departments.keys()))
-    st.write(f"### {dept}")
-    st.write(f"**Research Areas:** {departments[dept]}")
-    st.balloons()
+page = st.sidebar.radio("Go to", ["Campus Life", "Feedback"])
 
 # Campus Life Section
 if page == "Campus Life":
     st.header("🏕️ Campus Life at NIT Kurukshetra")
-    st.write("NIT Kurukshetra offers a vibrant campus life with multiple clubs, fests, and sports facilities.")
-    st.image("https://ugcounselor-content.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/04/03203527/NIT-Kurukshetra.jpg", caption="Campus Fest", use_container_width=True)
-    
-    # Added Aeromodelling Club
     clubs = ["Coding Club", "Robotics Club", "Music and Dance Society", "Sports Club", "Entrepreneurship Cell", "Aeromodelling Club"]
     st.write("### Active Clubs:")
     st.write(", ".join(clubs))
     
-    # Poll on favorite club
     club_choice = st.radio("Which club interests you the most?", clubs)
     if st.button("Vote"):
         st.success(f"Thank you for voting for {club_choice}!")
-        st.snow()  # ❄️ Added snowfall effect when a vote is cast
-
-# Admissions Section
-if page == "Admissions":
-    st.header("📌 Admissions at NIT Kurukshetra")
-    st.write("Admissions to undergraduate programs are through JEE Mains, and postgraduate admissions are based on GATE and other entrance exams.")
-    st.info("For more details, visit the [official website](https://www.nitkkr.ac.in).")
-    
-    # Eligibility check widget
-    jee_score = st.slider("Enter your JEE Main Score", 0, 360, 150)
-    if jee_score >= 180:
-        st.success("🎉 You have a good chance of getting into NIT Kurukshetra!")
-    else:
-        st.warning("📉 You may need to improve your score to secure admission.")
-
-# Gallery Section
-if page == "Gallery":
-    st.header("📸 Campus Gallery")
-    images = [
-        "https://ugcounselor-content.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/04/03203527/NIT-Kurukshetra.jpg",
-        "https://ugcounselor-content.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/04/03203527/NIT-Kurukshetra.jpg",
-        "https://ugcounselor-content.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/04/03203527/NIT-Kurukshetra.jpg"
-    ]
-    for img in images:
-        st.image(img, use_container_width=True)
-
-# Contact Info Section
-if page == "Contact Info":
-    st.header("📞 Contact Information")
-    st.write("**Address:** NIT Kurukshetra, Haryana, India")
-    st.write("**Phone:** +91 1744 238122")
-    st.write("**Email:** info@nitkkr.ac.in")
-    st.map(pd.DataFrame({"lat": [29.9457], "lon": [76.8233]}), zoom=12)
-
-# Feedback Section
-if page == "Feedback":
-    st.header("📝 Your Feedback Matters!")
-    name = st.text_input("Your Name")
-    feedback = st.text_area("Write your feedback here...")
-    if st.button("Submit Feedback"):
-        st.success("✅ Thank you for your valuable feedback!")
-        time.sleep(1)
-        st.rerun()
-
-# Footer
-st.markdown("---")
-st.caption("Developed with ❤️ using Streamlit")
+        st.markdown(snow_css, unsafe_allow_html=True)
+        st.markdown('<script>createSnowflakes();</script>', unsafe_allow_html=True)
